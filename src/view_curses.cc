@@ -288,14 +288,17 @@ void view_colors::init(void)
 
         start_color();
 
-        /* use_default_colors(); */
+        // fix for black background as suggested in
+        // https://github.com/tstack/lnav/issues/270#issuecomment-195779692
+        use_default_colors();
         for (int fg = 0; fg < 8; fg++) {
             for (int bg = 0; bg < 8; bg++) {
                 if (fg == 0 && bg == 0)
                     continue;
                 init_pair(ansi_color_pair_index(fg, bg),
                           ansi_colors_to_curses[fg],
-                          ansi_colors_to_curses[bg]);
+                          -1
+                          /*ansi_colors_to_curses[bg]*/);
             }
         }
 
